@@ -12,7 +12,7 @@ export default function HomeScreen() {
       headerImage={
         <Image
           source={{
-            uri: 'https://images.even3.com/zh7vbB-Kca5BMNnS71YK1GD9qOU=/1100x440/smart/https://static.even3.com/banner/BANNEREVEN3.a251c4d5270742d4a04b.png',
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm5Q5Yo7PN3riOgyIJpiqoD84M6zqEv1gnQQ&s',
           }}
           style={styles.headerImage}
         />
@@ -23,7 +23,15 @@ export default function HomeScreen() {
       </ThemedView>
 
       <ThemedText style={styles.description}>
-        Confira alguns livros disponíveis na Biblioteca IFMA.
+        Maria Clara Barros Magalhães
+      </ThemedText>
+
+      <ThemedText style={styles.description}>
+        Informática 2024
+      </ThemedText>
+
+      <ThemedText style={styles.description}>
+        Ler livros é a melhor forma de aprender algo novo.
       </ThemedText>
 
       {/* Livro 1 */}
