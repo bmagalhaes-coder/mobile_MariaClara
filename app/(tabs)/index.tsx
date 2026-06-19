@@ -22,7 +22,7 @@ export default function HomeScreen() {
         />
 
         <ThemedText type="title" style={styles.logoText}>
-          Biblioteca IFMA - Timon📚
+          Biblioteca IFMA - Timon 📚
         </ThemedText>
       </ThemedView>
 
