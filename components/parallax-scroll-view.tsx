@@ -1,5 +1,5 @@
 import type { PropsWithChildren, ReactElement } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -11,7 +11,10 @@ import { ThemedView } from '@/components/themed-view';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useThemeColor } from '@/hooks/use-theme-color';
 
-const HEADER_HEIGHT = 250;
+const { width } = Dimensions.get('window');
+
+// Banner proporcional à largura da tela
+const HEADER_HEIGHT = Math.max(90, width * 0.22);
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
@@ -25,8 +28,10 @@ export default function ParallaxScrollView({
 }: Props) {
   const backgroundColor = useThemeColor({}, 'background');
   const colorScheme = useColorScheme() ?? 'light';
+
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollOffset(scrollRef);
+
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -38,7 +43,11 @@ export default function ParallaxScrollView({
           ),
         },
         {
-          scale: interpolate(scrollOffset.value, [-HEADER_HEIGHT, 0, HEADER_HEIGHT], [2, 1, 1]),
+          scale: interpolate(
+            scrollOffset.value,
+            [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
+            [1.2, 1, 1]
+          ),
         },
       ],
     };
@@ -48,16 +57,23 @@ export default function ParallaxScrollView({
     <Animated.ScrollView
       ref={scrollRef}
       style={{ backgroundColor, flex: 1 }}
-      scrollEventThrottle={16}>
+      scrollEventThrottle={16}
+    >
       <Animated.View
         style={[
           styles.header,
-          { backgroundColor: headerBackgroundColor[colorScheme] },
+          {
+            backgroundColor: headerBackgroundColor[colorScheme],
+          },
           headerAnimatedStyle,
-        ]}>
+        ]}
+      >
         {headerImage}
       </Animated.View>
-      <ThemedView style={styles.content}>{children}</ThemedView>
+
+      <ThemedView style={styles.content}>
+        {children}
+      </ThemedView>
     </Animated.ScrollView>
   );
 }
@@ -66,10 +82,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   header: {
     height: HEADER_HEIGHT,
+    width: '100%',
     overflow: 'hidden',
   },
+
   content: {
     flex: 1,
     padding: 32,
