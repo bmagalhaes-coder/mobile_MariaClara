@@ -24,7 +24,7 @@ export default function HomeScreen() {
         <ThemedText type="title" style={styles.logoText}>
           Biblioteca IFMA - Timon📚
         </ThemedText>
-      </ThemedView>d
+      </ThemedView>
 
       {/* Perfil */}
       <ThemedView style={styles.profileCard}>
