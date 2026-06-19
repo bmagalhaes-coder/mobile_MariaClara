@@ -1,26 +1,32 @@
+import { useState } from 'react';
 import { Image } from 'expo-image';
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Pressable } from 'react-native';
 
-import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 
 export default function HomeScreen() {
+  const [categoria, setCategoria] = useState('todos');
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#006633', dark: '#004d26' }}
-      headerImage={
+    <ScrollView contentContainerStyle={styles.container}>
+      
+      {/* Logo + Título */}
+      <ThemedView style={styles.logoContainer}>
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.headerImage}
+          source={{
+            uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Instituto_Federal_do_Maranh%C3%A3o_-_Marca_Vertical_2015.svg/3840px-Instituto_Federal_do_Maranh%C3%A3o_-_Marca_Vertical_2015.svg.png',
+          }}
+          style={styles.logo}
           contentFit="contain"
         />
-      }>
-      
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">📚 Biblioteca IFMA</ThemedText>
+
+        <ThemedText type="title" style={styles.logoText}>
+          Biblioteca IFMA - Timon📚
+        </ThemedText>
       </ThemedView>
 
+      {/* Perfil */}
       <ThemedView style={styles.profileCard}>
         <ThemedText style={styles.name}>
           Maria Clara Barros Magalhães
@@ -35,80 +41,145 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
 
-      <ThemedView style={styles.card}>
-        <ThemedText type="subtitle">
-          📖 As Crônicas de Nárnia
-        </ThemedText>
+      {/* Botões de categorias */}
+      <ThemedView style={styles.buttonsContainer}>
+        <Pressable
+          style={[
+            styles.button,
+            categoria === 'todos' && styles.activeButton,
+          ]}
+          onPress={() => setCategoria('todos')}>
+          <ThemedText style={styles.buttonText}>Todos</ThemedText>
+        </Pressable>
 
-        <ThemedText style={styles.author}>
-          Autor: C. S. Lewis
-        </ThemedText>
+        <Pressable
+          style={[
+            styles.button,
+            categoria === 'fantasia' && styles.activeButton,
+          ]}
+          onPress={() => setCategoria('fantasia')}>
+          <ThemedText style={styles.buttonText}>Fantasia</ThemedText>
+        </Pressable>
 
-        <Image
-          source={{
-            uri: 'https://harpercollins.com.br/cdn/shop/files/9786560051959_f7c24963-6dd6-41c9-bdba-739f5e4cbec5.jpg?v=1781712870&width=350',
-          }}
-          style={styles.bookImage}
-          contentFit="cover"
-        />
+        <Pressable
+          style={[
+            styles.button,
+            categoria === 'romance' && styles.activeButton,
+          ]}
+          onPress={() => setCategoria('romance')}>
+          <ThemedText style={styles.buttonText}>Romance</ThemedText>
+        </Pressable>
+
+        <Pressable
+          style={[
+            styles.button,
+            categoria === 'terror' && styles.activeButton,
+          ]}
+          onPress={() => setCategoria('terror')}>
+          <ThemedText style={styles.buttonText}>Terror</ThemedText>
+        </Pressable>
       </ThemedView>
 
-      <ThemedView style={styles.card}>
-        <ThemedText type="subtitle">
-          📖 Livro do Desassossego
-        </ThemedText>
+      {/* Fantasia */}
+      {(categoria === 'todos' || categoria === 'fantasia') && (
+        <ThemedView style={styles.card}>
+          <ThemedText type="subtitle">
+            🏰 As Crônicas de Nárnia
+          </ThemedText>
 
-        <ThemedText style={styles.author}>
-          Autor: Fernando Pessoa
-        </ThemedText>
+          <ThemedText style={styles.author}>
+            Autor: C. S. Lewis
+          </ThemedText>
 
-        <Image
-          source={{
-            uri: 'https://cdl-static.s3-sa-east-1.amazonaws.com/covers/gg/9786559215621/livro-do-desassossego-edicao-revista-e-atualizada.jpg',
-          }}
-          style={styles.bookImage}
-          contentFit="cover"
-        />
-      </ThemedView>
+          <Image
+            source={{
+              uri: 'https://harpercollins.com.br/cdn/shop/files/9786560051959_f7c24963-6dd6-41c9-bdba-739f5e4cbec5.jpg?v=1781712870&width=350',
+            }}
+            style={styles.bookImage}
+            contentFit="cover"
+          />
+        </ThemedView>
+      )}
 
-      <ThemedView style={styles.card}>
-        <ThemedText type="subtitle">
-          📖 A Hora da Estrela
-        </ThemedText>
+      {/* Romance */}
+      {(categoria === 'todos' || categoria === 'romance') && (
+        <ThemedView style={styles.card}>
+          <ThemedText type="subtitle">
+            ❤️ A Hora da Estrela
+          </ThemedText>
 
-        <ThemedText style={styles.author}>
-          Autor: Clarice Lispector
-        </ThemedText>
+          <ThemedText style={styles.author}>
+            Autor: Clarice Lispector
+          </ThemedText>
 
-        <Image
-          source={{
-            uri: 'https://m.media-amazon.com/images/I/61TaHURu27L._SL1000_.jpg',
-          }}
-          style={styles.bookImage}
-          contentFit="cover"
-        />
-      </ThemedView>
+          <Image
+            source={{
+              uri: 'https://m.media-amazon.com/images/I/61TaHURu27L._SL1000_.jpg',
+            }}
+            style={styles.bookImage}
+            contentFit="cover"
+          />
+        </ThemedView>
+      )}
 
-    </ParallaxScrollView>
+      {/* Terror */}
+      {(categoria === 'todos' || categoria === 'terror') && (
+        <ThemedView style={styles.card}>
+          <ThemedText type="subtitle">
+            👻 A Queda da Casa de Usher e Outros Contos
+          </ThemedText>
+
+          <ThemedText style={styles.author}>
+            Autor: Edgar Allan Poe
+          </ThemedText>
+
+          <Image
+            source={{
+              uri: 'https://m.media-amazon.com/images/I/71IkspIsl0L._AC_UF1000,1000_QL80_.jpg',
+            }}
+            style={styles.bookImage}
+            contentFit="cover"
+          />
+        </ThemedView>
+      )}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    width: '100%',
-    height: '100%',
+  container: {
+    padding: 20,
+    paddingTop: 30,
+    backgroundColor: '#FAFAFC',
+    flexGrow: 1,
   },
 
-  titleContainer: {
+  logoContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 30,
+    gap: 15,
+    backgroundColor: 'transparent',
+  },
+
+  logo: {
+    width: 85,
+    height: 85,
+  },
+
+  logoText: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    flexShrink: 1,
   },
 
   profileCard: {
-    backgroundColor: '#F2F8F2',
+    backgroundColor: '#EFE7FF',
     padding: 20,
-    borderRadius: 15,
-    marginBottom: 20,
+    borderRadius: 30,
+    marginBottom: 25,
     alignItems: 'center',
 
     shadowColor: '#000',
@@ -116,10 +187,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-
-    elevation: 4,
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
   },
 
   name: {
@@ -127,12 +197,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 5,
+    color: '#222',
   },
 
   course: {
     fontSize: 16,
-    color: '#006633',
-    marginBottom: 10,
+    color: '#6207ac',
+    marginBottom: 5,
     fontWeight: '600',
   },
 
@@ -140,35 +211,61 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     fontStyle: 'italic',
+    color: '#555',
+  },
+
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginBottom: 25,
+    backgroundColor: 'transparent',
+  },
+
+  button: {
+    backgroundColor: '#9D7BDB',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+  },
+
+  activeButton: {
+    backgroundColor: '#6207ac',
+  },
+
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 
   card: {
-    backgroundColor: '#F2F8F2',
-    padding: 15,
+    backgroundColor: '#EFE7FF',
+    padding: 18,
     marginBottom: 20,
-    borderRadius: 15,
+    borderRadius: 20,
 
-    shadowColor: '#000',
+    shadowColor: '#000000de',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-
-    elevation: 4,
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
   },
 
   author: {
     marginTop: 5,
-    marginBottom: 10,
+    marginBottom: 12,
     fontSize: 15,
+    color: '#444',
   },
 
   bookImage: {
     width: 180,
     height: 270,
     alignSelf: 'center',
-    borderRadius: 10,
+    borderRadius: 12,
   },
 });
